@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Ver Productos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif; 
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0; 
+        }
+
+        .container {
+            width: 80%; 
+            margin: 50px auto; 
+            background-color: #ffffff; 
+            padding: 20px; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+        }
+
+        .title-bar {
+            display: flex;
+            align-items: center; 
+            margin-bottom: 20px; 
+        }
+
+        .title-bar h1 {
+            flex: 1; 
+            text-align: center;
+            margin: 0; 
+        }
+
+        .home-button {
+            margin-right: 10px; 
+        }
+        .home-button img {
+            width: 50px; 
+            height: auto; 
+            display: inline-block; 
+        }
+
+        .table-container {
+            overflow-x: auto; 
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px; 
+            text-align: left; 
+            border-bottom: 1px solid #ddd; 
+        }
+
+        th {
+            background-color: #f2f2f2; 
+        }
+
+        img {
+            width: 120px; 
+            height: 120px; 
+            display: block; 
+            margin: 0 auto; 
+        }
+        tr:hover {
+            background-color: #f5f5f5; 
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title-bar">
+            <a class="home-button" href="index.html"><img src="https://png.pngtree.com/png-vector/20190711/ourmid/pngtree-house-icon-real-estate-graphic-design-template-vector-png-image_1542074.jpg" id="home-button" alt=""></a>
+            <h1>Ver Productos</h1>
+        </div>
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>Tipo</th>
+                    <th>Producto(s)</th>
+                    <th>Region</th>
+                    <th>Comuna</th>
+                    <th>Fotos</th>
+                </tr>
+                <tr id="Fila1">
+                    <td>Fruta</td>
+                    <td>Manzana</td>
+                    <td>Metropolitana</td>
+                    <td>Maipu</td>
+                    <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiGxvwqlv9URsjITMwIPp83n67yO2dp5UFkg&usqp=CAU" alt="Placeholder Image"></td>
+                </tr>
+                <tr id="Fila2">
+                    <td>Verdura</td>
+                    <td>Lechuga</td>
+                    <td>Metropolitana</td>
+                    <td>Maipu</td>
+                    <td><img src="https://www.semilleriasanalfonso.cl/wp-content/uploads/2021/10/LECHUGA-WHITE-BOSTON.jpg" alt="Placeholder Image"></td>
+                </tr>
+                <tr id="Fila3">
+                    <td>Fruta</td>
+                    <td>Platano</td>
+                    <td>Metropolitana</td>
+                    <td>Maipu</td>
+                    <td><img src="https://www.clikisalud.net/wp-content/uploads/2021/02/por-que-comer-platanos-bueno-corazon.jpg" alt="Placeholder Image"></td>
+                </tr>
+                <tr id="Fila4">
+                    <td>Verdura</td>
+                    <td>Tomate</td>
+                    <td>Metropolitana</td>
+                    <td>Maipu</td>
+                    <td><img src="https://culturacientifica.com/app/uploads/2022/05/avin-cp-OlXUUQedQyM-unsplash1-scaled.jpg" alt="Placeholder Image"></td>
+                </tr>
+                <tr id="Fila5">
+                    <td>Fruta</td>
+                    <td>Pera</td>
+                    <td>Metropolitana</td>
+                    <td>Maipu</td>
+                    <td><img src="https://corel.cl/storage/2020/10/pera3-600x600.webp" alt="Placeholder Image"></td>
+                </tr>
+            </table>
+            <script src="../js/ver-productos.js"></script>
+        </div>
+    </div>
+</body>
+</html>

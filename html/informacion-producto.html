@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Informacion Productos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif; 
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0; 
+        }
+
+        .container {
+            width: 80%; 
+            margin: 50px auto; 
+            background-color: #ffffff;
+            padding: 20px; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+        }
+
+        .title-bar {
+            display: flex;
+            align-items: center; 
+            margin-bottom: 20px; 
+        }
+
+        .title-bar h1 {
+            flex: 1; 
+            text-align: center; 
+            margin: 0; 
+        }
+
+        .home-button {
+            margin-right: 10px; 
+        }
+        .home-button img {
+            width: 50px; 
+            height: auto; 
+            display: inline-block; 
+        }
+
+        .table-container {
+            overflow-x: auto; 
+        }
+
+        table {
+            width: 100%; 
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px; 
+            text-align: left; 
+            border-bottom: 1px solid #ddd; 
+        }
+
+        th {
+            background-color: #f2f2f2; 
+        }
+
+        img {
+            width: 640px; 
+            height: 480px; 
+            cursor: pointer; 
+            transition: transform 0.3s ease; 
+        }
+
+        img:hover {
+            transform: scale(1.02); 
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title-bar">
+            <a class="home-button" href="index.html"><img src="https://png.pngtree.com/png-vector/20190711/ourmid/pngtree-house-icon-real-estate-graphic-design-template-vector-png-image_1542074.jpg" id="home-button" alt=""></a>
+            <h1>Informacion Productos</h1>
+        </div>
+        <div class="table-container">
+            <table>
+                <tr id="titulos">
+                    <th>Tipo</th>
+                    <th>Producto</th>
+                    <th>Descripcion</th>
+                    <th>Region</th>
+                    <th>Comuna</th>
+                    <th>Nombre Vendedor</th>
+                    <th>Email Vendedor</th>
+                    <th>Telefono Vendedor</th>
+                    <th>Foto</th>
+                </tr>
+                <tr id="contenidos">
+                    <td>Fruta</td>
+                    <td>Manzana</td>
+                    <td>Es roja y muy rica</td>
+                    <td>Metropolitana</td>
+                    <td>Peñalolen</td>
+                    <td>Fulano Gonzalez</td>
+                    <td>angelito@gmail.com</td>
+                    <td>+569 8479 2267</td>
+                    <td><img src="https://img.freepik.com/vector-gratis/diseno-vectores-coloridos-manzana_341269-1123.jpg?size=338&ext=jpg&ga=GA1.1.1488620777.1712793600&semt=sph" alt="Placeholder Image" id="foto"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <script src="../js/informacion-producto.js"></script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Informacion Pedidos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif; 
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0; 
+        }
+
+        .container {
+            width: 80%; 
+            margin: 50px auto; 
+            background-color: #ffffff;
+            padding: 20px; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+        }
+
+        .title-bar {
+            display: flex;
+            align-items: center; 
+            margin-bottom: 20px; 
+        }
+
+        .title-bar h1 {
+            flex: 1; 
+            text-align: center; 
+            margin: 0; 
+        }
+
+        .home-button {
+            margin-right: 10px; 
+        }
+        .home-button img {
+            width: 50px; 
+            height: auto; 
+            display: inline-block; 
+        }
+
+        .table-container {
+            overflow-x: auto; 
+        }
+
+        table {
+            width: 100%; 
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px; 
+            text-align: left; 
+            border-bottom: 1px solid #ddd; 
+        }
+
+        th {
+            background-color: #f2f2f2; 
+        }
+
+        img {
+            width: 640px; 
+            height: 480px; 
+            cursor: pointer; 
+            transition: transform 0.3s ease; 
+        }
+
+        img:hover {
+            transform: scale(1.02); 
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+    <div class="title-bar">
+        <a class="home-button" href="index.html"><img src="https://png.pngtree.com/png-vector/20190711/ourmid/pngtree-house-icon-real-estate-graphic-design-template-vector-png-image_1542074.jpg" id="home-button" alt=""></a>
+        <h1>Informacion Pedidos</h1>
+    </div>
+    <div class="table-container">
+        <table>
+            <tr id="titulos">
+                <th>Tipo</th>
+                <th>Producto</th>
+                <th>Descripcion</th>
+                <th>Region</th>
+                <th>Comuna</th>
+                <th>Nombre Vendedor</th>
+                <th>Email Vendedor</th>
+                <th>Telefono Vendedor</th>
+                <th>Fotos</th>
+            </tr>
+            <tr id="contenidos">
+                <td>Fruta</td>
+                <td>Platano</td>
+                <td>Es amarillo y ta prodido</td>
+                <td>Metropolitana</td>
+                <td>Peñalolen</td>
+                <td>Kathya Gomez</td>
+                <td>correoVerdadero@gmail.com</td>
+                <td>+569 2227 9167</td>
+                <td><img src="https://img.freepik.com/foto-gratis/platano-unico-aislado-sobre-fondo-blanco_839833-17794.jpg" alt="Placeholder Image" id="foto"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<script src="../js/informacion-pedido.js"></script>
+</body>
+</html>
