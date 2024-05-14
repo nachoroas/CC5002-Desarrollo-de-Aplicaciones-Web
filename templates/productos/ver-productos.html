@@ -2,11 +2,14 @@
 <html lang="es">
 <head>
     <title>Ver Productos</title>
+    {% block css %}
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/ver.css') }}"
     />
+    {% endblock %}
 </head>
+{% block content %}    
 <body>
     <div class="container">
         <div class="title-bar">
@@ -22,43 +25,24 @@
                     <th>Comuna</th>
                     <th>Fotos</th>
                 </tr>
-                <tr id="Fila1">
-                    <td>Fruta</td>
-                    <td>Manzana</td>
-                    <td>Metropolitana</td>
-                    <td>Maipu</td>
-                    <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiGxvwqlv9URsjITMwIPp83n67yO2dp5UFkg&usqp=CAU" alt="Placeholder Image"></td>
-                </tr>
-                <tr id="Fila2">
-                    <td>Verdura</td>
-                    <td>Lechuga</td>
-                    <td>Metropolitana</td>
-                    <td>Maipu</td>
-                    <td><img src="https://www.semilleriasanalfonso.cl/wp-content/uploads/2021/10/LECHUGA-WHITE-BOSTON.jpg" alt="Placeholder Image"></td>
-                </tr>
-                <tr id="Fila3">
-                    <td>Fruta</td>
-                    <td>Platano</td>
-                    <td>Metropolitana</td>
-                    <td>Maipu</td>
-                    <td><img src="https://www.clikisalud.net/wp-content/uploads/2021/02/por-que-comer-platanos-bueno-corazon.jpg" alt="Placeholder Image"></td>
-                </tr>
-                <tr id="Fila4">
-                    <td>Verdura</td>
-                    <td>Tomate</td>
-                    <td>Metropolitana</td>
-                    <td>Maipu</td>
-                    <td><img src="https://culturacientifica.com/app/uploads/2022/05/avin-cp-OlXUUQedQyM-unsplash1-scaled.jpg" alt="Placeholder Image"></td>
-                </tr>
-                <tr id="Fila5">
-                    <td>Fruta</td>
-                    <td>Pera</td>
-                    <td>Metropolitana</td>
-                    <td>Maipu</td>
-                    <td><img src="https://corel.cl/storage/2020/10/pera3-600x600.webp" alt="Placeholder Image"></td>
-                </tr>
+                {% if productos%}
+                    {% for producto in productos %}
+                    <tr onclick="window.location='/informacion-producto?producto_id={{producto.producto_id}}';" style="cursor: pointer;">
+                        <td>{{ producto.tipo }}</td>
+                        <td>{{ producto.product }}</td>
+                        <td>{{ producto.region }}</td>
+                        <td>{{ producto.comuna }}</td>
+                        <td><img src="{{producto.path_image}}" alt="Placeholder Image" width="150"></td> 
+                    </tr>
+                    {% endfor %}
+                {% endif %}
+                
             </table>
+        </div>
+        {% endblock content %}
+        {% block javascript %}
             <script src="../js/ver-productos.js"></script>
+        {% endblock %}
         </div>
     </div>
 </body>

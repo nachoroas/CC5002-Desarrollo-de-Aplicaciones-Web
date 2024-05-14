@@ -2,12 +2,15 @@
 <html lang="es">
 <head>
     <title>Informacion Productos</title>
+    {% block css %}
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/informacion.css') }}"
     />
+    {% endblock %}
 </head>
 <body>
+    {% block content %}  
     <div class="container">
         <div class="title-bar">
             <a class="home-button" href="/"><img src="https://png.pngtree.com/png-vector/20190711/ourmid/pngtree-house-icon-real-estate-graphic-design-template-vector-png-image_1542074.jpg" id="home-button" alt=""></a>
@@ -26,21 +29,25 @@
                     <th>Telefono Vendedor</th>
                     <th>Foto</th>
                 </tr>
+                {% if producto%}
                 <tr id="contenidos">
-                    <td>Fruta</td>
-                    <td>Manzana</td>
-                    <td>Es roja y muy rica</td>
-                    <td>Metropolitana</td>
-                    <td>Peñalolen</td>
-                    <td>Fulano Gonzalez</td>
-                    <td>angelito@gmail.com</td>
-                    <td>+569 8479 2267</td>
-                    <td><img src="https://img.freepik.com/vector-gratis/diseno-vectores-coloridos-manzana_341269-1123.jpg?size=338&ext=jpg&ga=GA1.1.1488620777.1712793600&semt=sph" alt="Placeholder Image" id="foto"></td>
+                    <td>{{ producto.tipo }}</td>
+                    <td>{{ producto.product }}</td>
+                    <td>{{ producto.description }}</td>
+                    <td>{{ producto.region }}</td>
+                    <td>{{ producto.comuna }}</td>
+                    <td>{{ producto.name }}</td>
+                    <td>{{ producto.email }}</td>
+                    <td>{{ producto.phone }}</td>
+                    <td><img src="{{producto.path_image}}" alt="Placeholder Image" width="150"></td>
                 </tr>
+                {% endif %}
             </table>
         </div>
     </div>
-
+    {% endblock content %}
+    {% block javascript %}
     <script src="../js/informacion-producto.js"></script>
+    {% endblock %}
 </body>
 </html>
