@@ -17,8 +17,8 @@ const DicRegiones_Comunas = {
     "Región de Magallanes y de la Antártica Chilena": ["Punta Arenas", "Laguna Blanca", "Río Verde", "San Gregorio", "Cabo de Hornos (Ex Navarino)", "Antártica", "Porvenir", "Primavera", "Timaukel", "Natales", "Torres del Paine"], 
 }
 const DicTipos ={
-    "Fruta": [ "Arándano","Frambuesa","Frutilla","Grosella","Mora","Limón","Mandarina","Naranja","Pomelo","Melón","Sandía","Palta","Chirimoya","Coco","Dátil","Kiwi","Mango","Papaya","Piña","Plátano","Damasco","Cereza","Ciruela","Higo","Kaki","Manzana","Durazno","Nectarin","Níspero","Pera","Uva","Almendra","Avellana","Maní","Castaña","Nuez","Pistacho"],
-    "Verdura": ["Brócoli","Repollo","Coliflor","Rábano","Alcachofa","Lechuga","Zapallo","Pepino","Haba","Maíz","Champiñón","Acelga", "Apio","Espinaca","Perejil","Ajo","Cebolla","Espárrago","Puerro","Acelga","Espinaca","Remolacha","Berenjena","Papa","Pimiento","Tomate","Zanahoria"]
+    "fruta": [ "Arándano","Frambuesa","Frutilla","Grosella","Mora","Limón","Mandarina","Naranja","Pomelo","Melón","Sandía","Palta","Chirimoya","Coco","Dátil","Kiwi","Mango","Papaya","Piña","Plátano","Damasco","Cereza","Ciruela","Higo","Kaki","Manzana","Durazno","Nectarin","Níspero","Pera","Uva","Almendra","Avellana","Maní","Castaña","Nuez","Pistacho"],
+    "verdura": ["Brócoli","Repollo","Coliflor","Rábano","Alcachofa","Lechuga","Zapallo","Pepino","Haba","Maíz","Champiñón","Acelga", "Apio","Espinaca","Perejil","Ajo","Cebolla","Espárrago","Puerro","Acelga","Espinaca","Remolacha","Berenjena","Papa","Pimiento","Tomate","Zanahoria"]
 }
 
 const bolsaProductos = [];
@@ -87,8 +87,15 @@ function validateProductNumber(){
 
 function validatePhoto(photo){
   if (photo.length>0 && photo.length<=3){
+    const allowedExtensions = /\.(jpg|jpeg)$/i;
+    for (let i = 0; i < photo.length; i++) {
+      const fileName = photo[i].name;
+      if (!allowedExtensions.test(fileName)) {
+        return false;
+      }
+    }
     return true
-  }
+    }
   else{
     return false
   }
@@ -170,7 +177,7 @@ function handleFormSubmit(){
       }
     if (!validatePhoto(photo.files)){
         isValid = false;
-        errorMessage += "Por favor ingresa una cantidad de fotos valida.\n";
+        errorMessage += "Por favor ingresa una cantidad de fotos valida, con formato jpg.\n";
         photo.style.borderColor = "red";
     }
     else{

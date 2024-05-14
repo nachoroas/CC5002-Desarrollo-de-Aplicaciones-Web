@@ -18,8 +18,8 @@
                     <label for="tipo">Tipo</label>
                         <select name="tipo" id="tipo" required>
                             <option value="" selected disabled hidden>Seleccione un tipo</option>
-                            <option value="Fruta">Fruta</option>
-                            <option value="Verdura">Verdura</option>
+                            <option value="fruta">Fruta</option>
+                            <option value="verdura">Verdura</option>
                         </select>
                 </div>
                 <div id="producto-input" class="grupo-input">
@@ -87,6 +87,9 @@
                 </div>
             </form>
         </div>
+        {% if error %}
+        <div class="error-message">
+          {{ error }}
         <div id="confirmacion" class="modal">
             <div class="modal-content" id="mymodal">
                 <p>¿Confirma el registro de este producto?</p>
@@ -101,6 +104,8 @@
                 </div>
             </div>
         </div>
-        <script src="../js/agregar-producto.js"></script>
+        {% block javascript %}
+    <script lang="javascript" src="{{ url_for('static', filename='js/productos/agregar-producto.js') }}"></script>
+    {% endblock %}
     </body>
 </html>
