@@ -10,11 +10,7 @@
     {% endblock %}
 </head>
 <body>
-    {% block content %}  
-    {% if error %}
-    <div class="error-message">
-          {{ error }}
-    {% endif %}
+    
 
     <div class="container">
         <div class="title-bar">
@@ -50,6 +46,11 @@
             </table>
         </div>
     </div>
+    {% block content %}  
+    {% if error %}
+    <div class="error-message">
+          {{ error }}
+    {% endif %}
     {% endblock content %}
     {% block javascript %}
     <script src="../js/informacion-producto.js"></script>

@@ -65,11 +65,17 @@ img:hover {
     transform: scale(1.02); 
 }
 
+.error-message-container {
+    text-align: center; /* Centra horizontalmente el contenido */
+}
+
 .error-message {
-    border: #721c24 solid 1px;
-    border-radius: 5%;
-    background-color: #f8d7da;
-    color: #721c24;
-    text-align: center;
-    padding: .5em;
-  }
+    display: inline-block; /* Ajusta al contenido */
+    border: 2px solid #ff0000; /* Borde rojo */
+    border-radius: 5px; /* Bordes redondeados */
+    background-color: #ffebee; /* Fondo */
+    color: #ff0000; /* Texto rojo */
+    padding: 10px 20px; /* Relleno */
+    max-width: 80%; /* Ancho máximo */
+    text-align: center; /* Alineación centrada */
+}
