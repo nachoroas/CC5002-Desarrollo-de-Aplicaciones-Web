@@ -13,13 +13,17 @@
             <a class="home-button" href="/"><img src="https://png.pngtree.com/png-vector/20190711/ourmid/pngtree-house-icon-real-estate-graphic-design-template-vector-png-image_1542074.jpg" id="home-button" alt=""></a>
             <h1>Agregar Producto</h1>
         </div>
-            <form class="formulario" id="agregar-producto-form">
+        {% if error %}
+        <div class="error-message">
+          {{ error }}
+        {% endif %}
+            <form class="formulario" id="agregar_producto-form" action="agregarProducto" method="POST" enctype="multipart/form-data">
                 <div id="tipo-input" class="grupo-input">
                     <label for="tipo">Tipo</label>
                         <select name="tipo" id="tipo" required>
                             <option value="" selected disabled hidden>Seleccione un tipo</option>
-                            <option value="fruta">Fruta</option>
-                            <option value="verdura">Verdura</option>
+                            <option value="fruta">fruta</option>
+                            <option value="verdura">verdura</option>
                         </select>
                 </div>
                 <div id="producto-input" class="grupo-input">
@@ -44,22 +48,22 @@
                     <label for="region">Region</label>
                     <select name="region" id="region" required>
                         <option value="" selected disabled hidden>Seleccione una region</option>
-                        <option value="Región de Arica y Parinacota">Región de Arica y Parinacota</option>
+                        <option value="Región Arica y Parinacota">Región de Arica y Parinacota</option>
                         <option value="Región de Tarapacá">Región de Tarapacá</option>
                         <option value="Región de Antofagasta">Región de Antofagasta</option>
                         <option value="Región de Atacama">Región de Atacama</option>
                         <option value="Región de Coquimbo">Región de Coquimbo</option>
                         <option value="Región de Valparaíso">Región de Valparaíso</option>
                         <option value="Región Metropolitana de Santiago">Región Metropolitana de Santiago</option>
-                        <option value="Región del Libertador General Bernardo O'Higgins">Región del Libertador General Bernardo O'Higgins</option>
+                        <option value="Región del Libertador Bernardo Ohiggins">Región del Libertador General Bernardo O'Higgins</option>
                         <option value="Región del Maule">Región del Maule</option>
                         <option value="Región del Ñuble">Región del Ñuble</option>
                         <option value="Región del Biobío">Región del Biobío</option>
                         <option value="Región de La Araucanía">Región de La Araucanía</option>
                         <option value="Región de Los Ríos">Región de Los Ríos</option>
                         <option value="Región de Los Lagos">Región de Los Lagos</option>
-                        <option value="Región de Aysén del General Carlos Ibáñez del Campo">Región de Aysén del General Carlos Ibáñez del Campo</option>
-                        <option value="Región de Magallanes y de la Antártica Chilena">Región de Magallanes y de la Antártica Chilena</option>
+                        <option value="Región Aisén del General Carlos Ibáñez del Campo">Región de Aysén del General Carlos Ibáñez del Campo</option>
+                        <option value="Región de Magallanes y la Antártica Chilena">Región de Magallanes y de la Antártica Chilena</option>
                     </select>
                 </div>
                 <div id="comuna-input" class="grupo-input">
@@ -87,10 +91,6 @@
                 </div>
             </form>
         </div>
-        {% if error %}
-        <div class="error-message">
-          {{ error }}
-        {% endif %}
         <div id="confirmacion" class="modal">
             <div class="modal-content" id="mymodal">
                 <p>¿Confirma el registro de este producto?</p>
