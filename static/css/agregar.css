@@ -113,15 +113,16 @@ body {
         }
         
         .error-message-container {
-            display: inline;
+            text-align: center; 
         }
         
         .error-message {
-            border: #721c24 solid 1px;
-            border-radius: 5%;
-            background-color: #f8d7da;
-            color: #721c24;
-            text-align: center;
-            padding: 0;
-            display: inline-block;
+            display: inline-block; 
+            border: 2px solid #ff0000; 
+            border-radius: 5px; 
+            background-color: #ffebee; 
+            color: #ff0000; 
+            padding: 10px 20px; 
+            max-width: 80%; 
+            text-align: center; 
         }

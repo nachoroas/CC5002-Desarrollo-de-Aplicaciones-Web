@@ -63,3 +63,22 @@ img {
 tr:hover {
     background-color: #f5f5f5; 
 }
+
+.pagination {
+    text-align: center; 
+}
+
+.pagination a {
+    display: inline-block; 
+    margin: 0 5px; 
+    padding: 5px 10px; 
+    text-decoration: none; 
+    border: 1px solid #ccc; 
+    border-radius: 3px; 
+    background-color: #f0f0f0; 
+    color: #333; 
+}
+
+.pagination a:hover {
+    background-color: #e0e0e0; 
+}
