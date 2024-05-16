@@ -2,10 +2,7 @@
 <html lang="es">
 <head>
     <title>Agregar Producto</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/agregar.css') }}"
-    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/agregar.css') }}">
 </head>
     <body>
     <div class="container">
@@ -106,7 +103,7 @@
             </div>
         </div>
         {% block javascript %}
-    <script lang="javascript" src="{{ url_for('static', filename='js/productos/agregar-producto.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/productos/agregar-producto.js') }}"></script>
     {% endblock %}
     </body>
 </html>
