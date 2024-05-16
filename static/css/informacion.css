@@ -54,13 +54,6 @@ th {
     background-color: #f2f2f2; 
 }
 
-img {
-    width: 640px; 
-    height: 480px; 
-    cursor: pointer; 
-    transition: transform 0.3s ease; 
-}
-
 img:hover {
     transform: scale(1.02); 
 }
