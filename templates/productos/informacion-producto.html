@@ -6,12 +6,11 @@
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/informacion.css') }}"
-    />
+    >
     {% endblock %}
 </head>
+{% block content %} 
 <body>
-    
-
     <div class="container">
         <div class="title-bar">
             <a class="home-button" href="/"><img src="https://png.pngtree.com/png-vector/20190711/ourmid/pngtree-house-icon-real-estate-graphic-design-template-vector-png-image_1542074.jpg" id="home-button" alt=""></a>
@@ -31,29 +30,38 @@
                     <th>Foto</th>
                 </tr>
                 {% if producto%}
-                <tr id="contenidos">
-                    <td>{{ producto.tipo }}</td>
-                    <td>{{ producto.product }}</td>
-                    <td>{{ producto.description }}</td>
-                    <td>{{ producto.region }}</td>
-                    <td>{{ producto.comuna }}</td>
-                    <td>{{ producto.name }}</td>
-                    <td>{{ producto.email }}</td>
-                    <td>{{ producto.phone }}</td>
-                    <td><img src="{{producto.path_image}}" alt="Placeholder Image" width="150"></td>
-                </tr>
+                    {% for product in producto %}
+                    <tr id="contenidos">
+                        <td>{{ product.tipo }}</td>
+                        <td>
+                        {% for frutaVerdura in product.product%}
+                            {{ frutaVerdura }}
+                        {%endfor%}
+                        </td>
+                        <td>{{ product.description }}</td>
+                        <td>{{ product.region }}</td>
+                        <td>{{ product.comuna }}</td>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.email }}</td>
+                        <td>{{ product.phone }}</td>
+                        <td>
+                            {% for Image in product.path_image%}
+                                <img src="{{Image}}" alt="Placeholder Image" onclick="window.location='/informacion-producto?producto_id={{product.id}}&img={{not product.imgSize}}';" style="cursor: pointer;">
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    {% endfor %}
                 {% endif %}
             </table>
         </div>
     </div>
-    {% block content %}  
     {% if error %}
     <div class="error-message">
           {{ error }}
     {% endif %}
     {% endblock content %}
     {% block javascript %}
-    <script src="../js/informacion-producto.js"></script>
+    <!--<script src="../js/informacion-producto.js"></script>-->
     {% endblock %}
 </body>
 </html>

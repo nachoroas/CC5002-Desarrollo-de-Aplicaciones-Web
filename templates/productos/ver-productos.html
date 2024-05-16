@@ -6,7 +6,7 @@
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/ver.css') }}"
-    />
+    >
     {% endblock %}
 </head>
 {% block content %}    
@@ -29,10 +29,18 @@
                     {% for producto in productos %}
                     <tr onclick="window.location='/informacion-producto?producto_id={{producto.producto_id}}';" style="cursor: pointer;">
                         <td>{{ producto.tipo }}</td>
-                        <td>{{ producto.product }}</td>
+                        <td>
+                        {% for frutaVerdura in producto.product%}
+                            {{ frutaVerdura }}
+                        {%endfor%}
+                        </td>
                         <td>{{ producto.region }}</td>
-                        <td>{{ producto.comuna }}</td>
-                        <td><img src="{{producto.path_image}}" alt="Placeholder Image" width="150"></td> 
+                        <td>{{ producto.comuna }}</td>  
+                        <td>
+                        {% for Image in producto.path_image%}
+                            <img src="{{Image}}" alt="Placeholder Image">
+                        {% endfor %}
+                        </td> 
                     </tr>
                     {% endfor %}
                 {% endif %}
@@ -53,7 +61,7 @@
         </div>
         {% endblock content %}
         {% block javascript %}
-            <script src="../js/ver-productos.js"></script>
+           <!-- <script src="../js/ver-productos.js"></script>-->
         {% endblock %}
         </div>
     </div>
