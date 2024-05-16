@@ -5,13 +5,14 @@ from database import db
 import hashlib
 import filetype
 import os
+import math
 import uuid
 
-UPLOAD_FOLDER = 'static/uploads'
+
+dir_actual = os.getcwd()
+UPLOAD_FOLDER = os.path.join(dir_actual,'Tarea','static','uploads')
 
 app = Flask(__name__)
-
-
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000 # 16 MB 
@@ -27,58 +28,86 @@ def index():
 
 # -- Productos --
 
-@app.route("/agregar-producto", methods=["GET", "POST"])
-def agregar_producto():
+@app.route("/agregarProducto", methods=["GET", "POST"])
+def agregarProducto():
     if request.method == "POST":
-        type=request.form.get("type")
-        description=request.form.get("description")
-        photo=request.files.get("photo")
-        comuna_id=request.form.get("comuna_id")
-        name=request.form.get("name")
+        type=request.form.get("tipo")
+        product=request.form.getlist("productItem")  
+        #print(product)      
+        description=request.form.get("descripcion")
+        photos=request.files.getlist("foto")
+        comuna_id=request.form.getlist("comuna")
+        name=request.form.get("nombre")
         email=request.form.get("email")
-        phone=request.form.get("phone")
+        phone=request.form.get("telefono")
         error=""
-        if validate_register_product_data(type, description,photo, comuna_id, name, email, phone):
-            _filename_hash = hashlib.sha256(secure_filename(photo.filename).encode("utf-8")).hexdigest()
-            _extension = filetype.guess(photo).extension
-            img_filename = f"{_filename_hash}_{str(uuid.uuid4())}.{_extension}" 
-            path =os.path.join(app.config["UPLOAD_FOLDER"], img_filename)
-            photo.save(os.path.join(app.config["UPLOAD_FOLDER"], img_filename))
-            status, msg = db.register_product(type, description,img_filename,path, comuna_id, name, email, phone)
+        if validate_register_product_data(type,product, description,photos, comuna_id, name, email, phone):
+            status, msg= db.register_product(type,product, description,photos, comuna_id, name, email, phone)
             if status:
                 return redirect(url_for("index"))
             error += msg
+            
         else:
             error += "Uno de los campos no es valido." 
-        render_template("productos/agregar-producto.html",error=error)
+        render_template("productos/agregarProducto.html",error=error)        
+    if request.method == "GET":
+        regiones={}
+        rawRegions=db.get_regions()
+        for region in rawRegions:
+            region_id, region_name = region
+            comunaraw=db.get_comuna_by_region_id(region_id)
+            comunas = [comuna[0] for comuna in comunaraw]  
+            regiones[region_name] = comunas
+        #aca el diccionario quedo bien hecho, pero no se usarlo aunque probablemente sea util asi que lo dejo        
+        return render_template("productos/agregarProducto.html", regiones=regiones)
+    else:
+        return render_template("productos/agregarProducto.html")
+
             
-    return render_template("productos/agregar-producto.html")
 
 @app.route("/informacion-producto", methods=["GET", "POST"])
 def informacion_producto():
     producto_id = request.args.get('producto_id')
-    producto=[]
+    imgSize = request.args.get('img')
+    imgSize = True if imgSize == "True" else False
+    productoArray=[]
     error=""
     if validate_product_id(producto_id):
-        id, tipo, descripcion, comuna_id, nombre_productor, email_productor, celular_productor = db.get_product_by_id(producto_id)
+        id, tipo, descripcion, comuna_id, nombre_productor, email_productor, celular_productor = db.get_product(producto_id)
         type_vegetable_fruit=db.get_products_types(id)
+        frutasVerduras=[]
+        for i in range(len(type_vegetable_fruit)):
+            frutasVerduras.append(type_vegetable_fruit[i][0])
         comuna_name=db.get_comuna_name(comuna_id)
+        comuna_name=comuna_name[0]
         region_id=db.get_region_id(comuna_id)
         region_name=db.get_region_name(region_id)
-        path,file_name=db.get_product_photo(id)
-        img_filename = f"uploads/{file_name}"
-        producto.append({
+        region_name=region_name[0]
+        files=db.get_product_photo(id)
+        filesImgs=[]
+        for i in range(len(files)):
+            file_name=files[i][1]
+            base, ext = os.path.splitext(file_name)
+            if (not imgSize):
+                new_filename = f"{base}_640x480{ext}"
+            elif imgSize:
+                new_filename = f"{base}_1280x1024{ext}"
+            img_filename = f"static/uploads/{id}/{new_filename}"
+            filesImgs.append(img_filename)
+        productoArray.append({
+            "id":id,
             "tipo":tipo,
-            "product":type_vegetable_fruit,
+            "product":frutasVerduras,
             "descripcion":descripcion,
             "region":region_name,
             "comuna":comuna_name,
             "name":nombre_productor,
             "email":email_productor,
             "phone":celular_productor, 
-            "path_image": url_for('static', filename=img_filename),
+            "path_image": filesImgs,
+            "imgSize":imgSize,
         })
-        return render_template("productos/informacion-producto.html",producto=producto)
+        return render_template("productos/informacion-producto.html",producto=productoArray)
         
     else:
         error += "El id del producto no es valido."
@@ -87,25 +116,41 @@ def informacion_producto():
 @app.route("/ver-productos", methods=["GET"])
 def ver_productos():
     productos=[]
+    current_page = request.args.get('page')
+    current_page=1 if current_page is None else int(current_page)
+    
     for producto in db.get_products():
         id, tipo, descripcion, comuna_id, nombre_productor, email_productor, celular_productor= producto
         type_vegetable_fruit=db.get_products_types(id)
-        path,file_name=db.get_product_photo(id)
-        img_filename = f"uploads/{file_name}"
-        comuna_name=db.get_comuna_name(comuna_id)
+        frutasVerduras=[]
+        for i in range(len(type_vegetable_fruit)):
+            frutasVerduras.append(type_vegetable_fruit[i][0])
+        #print(frutasVerduras)
+        files=db.get_product_photo(id)
+        filesImgs=[]
+        for i in range(len(files)):
+            file_name=files[i][1]
+            base, ext = os.path.splitext(file_name)
+            new_filename = f"{base}_120x120{ext}"
+            img_filename = f"static/uploads/{producto[0]}/{new_filename}"
+            filesImgs.append(img_filename)
+        comuna_namedb=db.get_comuna_name(comuna_id)
+        comuna_name=comuna_namedb[0]
         region_id=db.get_region_id(comuna_id)
-        region_name=db.get_region_name(region_id)
+        region_namedb=db.get_region_name(region_id)
+        region_name=region_namedb[0]
         productos.append({
             "producto_id":id,
             "tipo":tipo,
-            "product":type_vegetable_fruit,
+            "product":frutasVerduras,
             "region":region_name,
             "comuna":comuna_name,
-            "path_image": url_for('static', filename=img_filename),
-            
+            "path_image": filesImgs
         })
-    
-    return render_template("productos/ver-productos.html",productos=productos)
+        
+    total_pages = math.ceil(len(productos)/5)
+    productos = productos[(current_page-1)*5:current_page*5]    
+    return render_template("productos/ver-productos.html",productos=productos, current_page=current_page, total_pages=total_pages)
 
 # -- Pedidos --
 
