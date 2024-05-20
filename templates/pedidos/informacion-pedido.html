@@ -2,11 +2,14 @@
 <html lang="es">
 <head>
     <title>Informacion Pedidos</title>
+    {% block css %}
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/informacion.css') }}"
-    />
+    >
+    {% endblock %}
 </head>
+{% block content %} 
 <body>
     <div class="container">
     <div class="title-bar">
@@ -24,22 +27,35 @@
                 <th>Nombre Vendedor</th>
                 <th>Email Vendedor</th>
                 <th>Telefono Vendedor</th>
-                <th>Fotos</th>
             </tr>
-            <tr id="contenidos">
-                <td>Fruta</td>
-                <td>Platano</td>
-                <td>Es amarillo y ta prodido</td>
-                <td>Metropolitana</td>
-                <td>Peñalolen</td>
-                <td>Kathya Gomez</td>
-                <td>correoVerdadero@gmail.com</td>
-                <td>+569 2227 9167</td>
-                <td><img src="https://img.freepik.com/foto-gratis/platano-unico-aislado-sobre-fondo-blanco_839833-17794.jpg" alt="Placeholder Image" id="foto"></td>
-            </tr>
-        </table>
+            {% if pedido%}
+                    {% for pedidos in pedido %}
+                    <tr id="contenidos">
+                        <td>{{ pedidos.tipo }}</td>
+                        <td>
+                        {% for frutaVerdura in pedidos.product%}
+                            {{ frutaVerdura }}
+                        {%endfor%}
+                        </td>
+                        <td>{{ pedidos.descripcion }}</td>
+                        <td>{{ pedidos.region }}</td>
+                        <td>{{ pedidos.comuna }}</td>
+                        <td>{{ pedidos.name }}</td>
+                        <td>{{ pedidos.email }}</td>
+                        <td>{{ pedidos.phone }}</td>
+                    </tr>
+                    {% endfor %}
+                {% endif %}
+            </table>
+        </div>
     </div>
-</div>
-<script src="../js/informacion-pedido.js"></script>
+    {% if error %}
+        <div class="error-message">
+            {{ error }}
+        {% endif %}
+        {% endblock content %}
+        {% block javascript %}
+        <!--<script src="../js/informacion-producto.js"></script>-->
+        {% endblock %}
 </body>
 </html>

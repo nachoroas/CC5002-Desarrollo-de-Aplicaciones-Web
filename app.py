@@ -71,6 +71,9 @@ def informacion_producto():
     imgSize = True if imgSize == "True" else False
     productoArray=[]
     error=""
+    if producto_id is None:
+        error += "El id del producto no es valido."
+        return render_template("productos/informacion-producto.html",error=error)
     if validate_product_id(producto_id):
         id, tipo, descripcion, comuna_id, nombre_productor, email_productor, celular_productor = db.get_product(producto_id)
         type_vegetable_fruit=db.get_products_types(id)
@@ -180,8 +183,39 @@ def agregar_pedido():
 
 @app.route("/informacion-pedido", methods=["GET", "POST"])
 def informacion_pedido():
-
-    return render_template("pedidos/informacion-pedido.html")
+    producto_id = request.args.get('pedido_id')
+    productoArray=[]
+    error=""
+    if producto_id is None:
+        error += "El id del pedido no es valido."
+        return render_template("pedidos/informacion-pedido.html",error=error)
+    if validate_product_id(producto_id):
+        id, tipo, descripcion, comuna_id, nombre_productor, email_productor, celular_productor = db.get_pedido(producto_id)
+        type_vegetable_fruit=db.get_pedidos_types(id)
+        frutasVerduras=[]
+        for i in range(len(type_vegetable_fruit)):
+            frutasVerduras.append(type_vegetable_fruit[i][0])
+        comuna_name=db.get_comuna_name(comuna_id)
+        comuna_name=comuna_name[0]
+        region_id=db.get_region_id(comuna_id)
+        region_name=db.get_region_name(region_id)
+        region_name=region_name[0]
+        productoArray.append({
+            "id":id,
+            "tipo":tipo,
+            "product":frutasVerduras,
+            "descripcion":descripcion,
+            "region":region_name,
+            "comuna":comuna_name,
+            "name":nombre_productor,
+            "email":email_productor,
+            "phone":celular_productor
+        })
+        return render_template("pedidos/informacion-pedido.html",pedido=productoArray)
+        
+    else:
+        error += "El id del producto no es valido."
+        return render_template("pedidos/informacion-pedido.html",error=error)
 
 @app.route("/ver-pedidos", methods=["GET", "POST"])
 def ver_pedidos():
