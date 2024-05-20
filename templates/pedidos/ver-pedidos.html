@@ -2,10 +2,13 @@
 <html lang="es">
     <head>
         <title>Ver Pedidos</title>
+        {% block css %}
         <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='css/ver.css') }}"
-        />
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/ver.css') }}"
+        >
+    {% endblock %}
+    {% block content %} 
     </head>
     <body>
         <div class="container">
@@ -22,45 +25,39 @@
                 <th>Comuna</th>
                 <th>Nombre Comprador</th>
             </tr>
-            <tr id="Fila1">
-                <td>Fruta</td>
-                <td>Manzana</td>
-                <td>Metropolitana</td>
-                <td>Maipu</td>
-                <td>Jose</td>
-            </tr>
-            <tr id="Fila2">
-                <td>Verdura</td>
-                <td>Tomate</td>
-                <td>Metropolitana</td>
-                <td>Maipu</td>
-                <td>Pepe</td>
-            </tr>
-            <tr id="Fila3">
-                <td>Verdura</td>
-                <td>Lechuga</td>
-                <td>Metropolitana</td>
-                <td>Maipu</td>
-                <td>Tomas</td>
-            </tr>
-            <tr id="Fila4">
-                <td>Verdura</td>
-                <td>Lechuga</td>
-                <td>Metropolitana</td>
-                <td>Maipu</td>
-                <td>Marivel</td>
-            </tr>
-            <tr id="Fila5">
-                <td>Fruta</td>
-                <td>Manzana</td>
-                <td>Metropolitana</td>
-                <td>Maipu</td>
-                <td>Alfonso</td>
-            </tr>
-                
-
-        </table> 
-    <script src="../js/ver-pedidos.js"></script>
+            {% if pedidos%}
+                    {% for pedido in pedidos %}
+                    <tr onclick="window.location='/informacion-pedido?pedido_id={{pedido.pedido_id}}';" style="cursor: pointer;">
+                        <td>{{ pedido.tipo }}</td>
+                        <td>
+                        {% for frutaVerdura in pedido.product%}
+                            {{ frutaVerdura }}
+                        {%endfor%}
+                        </td>
+                        <td>{{ pedido.region }}</td>
+                        <td>{{ pedido.comuna }}</td>
+                        <td>{{ pedido.name }}</td>
+                    </tr>
+                    {% endfor %}
+                {% endif %}
+        </table>
+        <div class="pagination">
+            {% if current_page > 1 %}
+                <a href="?page={{ current_page - 1 }}">Anterior</a>
+            {% endif %}
+    
+            {% for page_num in range(1, total_pages + 1) %}
+                <a href="?page={{ page_num }}">{{ page_num }}</a>
+            {% endfor %}
+    
+            {% if current_page < total_pages %}
+                <a href="?page={{ current_page + 1 }}">Siguiente</a>
+            {% endif %}
+    </div> 
+    {% endblock content %}
+        {% block javascript %}
+           <!-- <script src="../js/ver-productos.js"></script>-->
+        {% endblock %}
         </div>
     </body>
 </html>

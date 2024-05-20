@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, redirect, url_for
 from werkzeug.utils import secure_filename
-from utils.validations import validate_register_product_data,validate_product_id
+from utils.validations import validate_product_data,validate_product_id,validate_pedido_data
 from database import db
 import hashlib
 import filetype
@@ -41,7 +41,7 @@ def agregarProducto():
         email=request.form.get("email")
         phone=request.form.get("telefono")
         error=""
-        if validate_register_product_data(type,product, description,photos, comuna_id, name, email, phone):
+        if validate_product_data(type,product, description,photos, comuna_id, name, email, phone):
             status, msg= db.register_product(type,product, description,photos, comuna_id, name, email, phone)
             if status:
                 return redirect(url_for("index"))
@@ -49,7 +49,7 @@ def agregarProducto():
             
         else:
             error += "Uno de los campos no es valido." 
-        render_template("productos/agregarProducto.html",error=error)        
+        return render_template("productos/agregarProducto.html",error=error)        
     if request.method == "GET":
         regiones={}
         rawRegions=db.get_regions()
@@ -62,8 +62,7 @@ def agregarProducto():
         return render_template("productos/agregarProducto.html", regiones=regiones)
     else:
         return render_template("productos/agregarProducto.html")
-
-            
+        
 
 @app.route("/informacion-producto", methods=["GET", "POST"])
 def informacion_producto():
@@ -154,10 +153,30 @@ def ver_productos():
 
 # -- Pedidos --
 
-@app.route("/agregar-pedido", methods=["GET", "POST"])
+@app.route("/agregarPedido", methods=["GET", "POST"])
 def agregar_pedido():
-
-    return render_template("pedidos/agregar-pedido.html")
+    
+    if request.method == "POST":
+        type=request.form.get("tipo")
+        product=request.form.getlist("productItem")  
+        description=request.form.get("descripcion")
+        comuna_id=request.form.getlist("comuna")
+        name=request.form.get("nombre")
+        email=request.form.get("email")
+        phone=request.form.get("telefono")
+        error=""
+        if validate_pedido_data(type,product, description, comuna_id, name, email, phone):
+            status, msg= db.register_pedido(type,product, description, comuna_id, name, email, phone)
+            if status:
+                return redirect(url_for("index"))
+            error += msg
+            
+        else:
+            error += "Uno de los campos no es valido." 
+        return render_template("pedidos/agregarPedido.html",error=error)  
+            
+        
+    return render_template("pedidos/agregarPedido.html")
 
 @app.route("/informacion-pedido", methods=["GET", "POST"])
 def informacion_pedido():
@@ -166,9 +185,35 @@ def informacion_pedido():
 
 @app.route("/ver-pedidos", methods=["GET", "POST"])
 def ver_pedidos():
-
-    return render_template("pedidos/ver-pedidos.html")
-
+    pedidos=[]
+    current_page = request.args.get('page')
+    current_page=1 if current_page is None else int(current_page)
+    
+    for pedido in db.get_pedidos():
+        id, tipo, descripcion, comuna_id, nombre_productor, email_productor, celular_productor= pedido
+        type_vegetable_fruit=db.get_pedidos_types(id)
+        #print(type_vegetable_fruit)
+        frutasVerduras=[]
+        for i in range(len(type_vegetable_fruit)):
+            frutasVerduras.append(type_vegetable_fruit[i][0])
+        #print(frutasVerduras)
+        comuna_namedb=db.get_comuna_name(comuna_id)
+        comuna_name=comuna_namedb[0]
+        region_id=db.get_region_id(comuna_id)
+        region_namedb=db.get_region_name(region_id)
+        region_name=region_namedb[0]
+        pedidos.append({
+            "pedido_id":id,
+            "tipo":tipo,
+            "product":frutasVerduras,
+            "region":region_name,
+            "comuna":comuna_name,
+            "name":nombre_productor,
+        })
+        
+    total_pages = math.ceil(len(pedidos)/5)
+    pedidos = pedidos[(current_page-1)*5:current_page*5]    
+    return render_template("pedidos/ver-pedidos.html",pedidos=pedidos, current_page=current_page, total_pages=total_pages)
 
 
 if __name__ == "__main__":
