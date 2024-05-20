@@ -17,6 +17,7 @@ def validate_product(product):
     for i in product:
         if i not in productarray:
             return False
+    print(product)
     return True
     
 
@@ -34,6 +35,7 @@ def validate_comuna(comuna_id):
     for i in comuna_id:
         if i not in comunasarray:
             return False
+    print(comuna_id)
     return True
 
 
@@ -65,13 +67,19 @@ def validate_img(conf_img):
     return True
 
 def validate_phone(phone):
+    print(phone)
     if phone:
         return re.match(r"^\+?1?\d{9,15}$", phone)
     else:
         return True
 
-def validate_register_product_data(type,product, description,photo, comuna_id, name, email, phone):
+def validate_product_data(type,product, description,photo, comuna_id, name, email, phone):
     return validate_type(type) and validate_product(product) and validate_desc(description) and validate_img(photo) and validate_comuna(comuna_id) and validate_name(name) and validate_email(email) and validate_phone(phone)
+
+def validate_pedido_data(type,product, description, comuna_id, name, email, phone):
+    #print(type,product, description, comuna_id, name, email, phone)
+    return validate_type(type) and validate_product(product) and validate_desc(description) and validate_comuna(comuna_id) and validate_name(name) and validate_email(email) and validate_phone(phone)
+
 
 def validate_product_id(producto_id):
     return producto_id.isdigit() and int(producto_id) > 0
