@@ -6,7 +6,7 @@
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/agregar.css') }}"
-    />
+    >
 </head>
 <body>
     <div class="container">
@@ -14,13 +14,17 @@
         <a class="home-button" href="/"><img src="https://png.pngtree.com/png-vector/20190711/ourmid/pngtree-house-icon-real-estate-graphic-design-template-vector-png-image_1542074.jpg" id="home-button" alt=""></a>
         <h1>Agregar Pedido</h1>
     </div>
-        <form class="formulario" id="agregar-pedido-form">
+    {% if error %}
+        <div class="error-message">
+          {{ error }}
+        {% endif %}
+        <form class="formulario" id="agregar-pedido-form" action="agregarPedido" method="POST" enctype="multipart/form-data">
             <div id="tipo-input" class="grupo-input">
                 <label for="tipo">Tipo</label>
                     <select name="tipo" id="tipo" required>
                         <option value="" selected disabled hidden>Seleccione un tipo</option>
-                        <option value="Fruta">Fruta</option>
-                        <option value="Verdura">Verdura</option>
+                        <option value="fruta">fruta</option>
+                        <option value="verdura">verdura</option>
                     </select>
             </div>
             <div id="producto-input" class="grupo-input">
@@ -40,22 +44,22 @@
                 <label for="region">Region</label>
                 <select name="region" id="region" required>
                     <option value="" selected disabled hidden>Seleccione una region</option>
-                    <option value="Región de Arica y Parinacota">Región de Arica y Parinacota</option>
+                    <option value="Región Arica y Parinacota">Región de Arica y Parinacota</option>
                     <option value="Región de Tarapacá">Región de Tarapacá</option>
                     <option value="Región de Antofagasta">Región de Antofagasta</option>
                     <option value="Región de Atacama">Región de Atacama</option>
                     <option value="Región de Coquimbo">Región de Coquimbo</option>
                     <option value="Región de Valparaíso">Región de Valparaíso</option>
                     <option value="Región Metropolitana de Santiago">Región Metropolitana de Santiago</option>
-                    <option value="Región del Libertador General Bernardo O'Higgins">Región del Libertador General Bernardo O'Higgins</option>
+                    <option value="Región del Libertador Bernardo Ohiggins">Región del Libertador General Bernardo O'Higgins</option>
                     <option value="Región del Maule">Región del Maule</option>
                     <option value="Región del Ñuble">Región del Ñuble</option>
                     <option value="Región del Biobío">Región del Biobío</option>
                     <option value="Región de La Araucanía">Región de La Araucanía</option>
                     <option value="Región de Los Ríos">Región de Los Ríos</option>
                     <option value="Región de Los Lagos">Región de Los Lagos</option>
-                    <option value="Región de Aysén del General Carlos Ibáñez del Campo">Región de Aysén del General Carlos Ibáñez del Campo</option>
-                    <option value="Región de Magallanes y de la Antártica Chilena">Región de Magallanes y de la Antártica Chilena</option>
+                    <option value="Región Aisén del General Carlos Ibáñez del Campo">Región de Aysén del General Carlos Ibáñez del Campo</option>
+                    <option value="Región de Magallanes y la Antártica Chilena">Región de Magallanes y de la Antártica Chilena</option>
                 </select>
             </div>
             <div id="comuna-input" class="grupo-input">
@@ -98,6 +102,8 @@
             </div>
         </div>
     </div>  
-    <script src="../js/agregar-pedido.js"></script>
+    {% block javascript %}
+    <script src="{{ url_for('static', filename='js/pedido/agregar-pedido.js') }}"></script>
+    {% endblock %}
 </body>
 </html>
