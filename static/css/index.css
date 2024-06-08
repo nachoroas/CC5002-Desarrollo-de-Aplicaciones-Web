@@ -43,3 +43,7 @@ body {
 .button:hover {
     background-color: #45a049;
 }
+
+.wide-button {
+    grid-column: span 2; 
+}

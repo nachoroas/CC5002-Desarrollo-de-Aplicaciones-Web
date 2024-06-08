@@ -1,4 +1,5 @@
-from flask import Flask, request, render_template, redirect, url_for
+from flask import Flask, request, render_template, redirect, url_for, jsonify
+from flask_cors import cross_origin
 from werkzeug.utils import secure_filename
 from utils.validations import validate_product_data,validate_product_id,validate_pedido_data
 from database import db
@@ -248,6 +249,18 @@ def ver_pedidos():
     total_pages = math.ceil(len(pedidos)/5)
     pedidos = pedidos[(current_page-1)*5:current_page*5]    
     return render_template("pedidos/ver-pedidos.html",pedidos=pedidos, current_page=current_page, total_pages=total_pages)
+
+@app.route("/estadisticas", methods=["GET"])
+def estadisticas():
+    return render_template("estadisticas/estadisticas.html")
+
+@app.route("/get-estadisticas", methods=["GET"])
+@cross_origin(origin="localhost", supports_credentials=True)
+def get_estadisticas():
+    data1 = db.get_estadisticas_pedidos()
+    data2 = db.get_estadisticas_productos()
+    TotalData=(data2,data1)
+    return jsonify(TotalData)
 
 
 if __name__ == "__main__":

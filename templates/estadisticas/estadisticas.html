@@ -1,0 +1,28 @@
+{% block css %}
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/estadisticas.css') }}"
+    />
+{% endblock %}
+
+{% block content %}    
+<div class="stats-container">
+    <div class="title-bar">
+        <a class="home-button" href="/"><img src="https://png.pngtree.com/png-vector/20190711/ourmid/pngtree-house-icon-real-estate-graphic-design-template-vector-png-image_1542074.jpg" id="home-button" alt=""></a>
+        <h1>Estadísticas</h1>
+    </div>
+    <figure class="highcharts-figure">
+        <div id="containerProductos"></div>
+        <p class="highcharts-description">
+        </p>
+        <div id="containerPedidos"></div>
+        <p class="highcharts-description">
+        </p>
+    </figure>
+</div>
+{% endblock content %}
+
+{% block javascript %}
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="{{url_for('static', filename='js/estadisticas/estadisticas.js')}}"></script>
+{% endblock %}
